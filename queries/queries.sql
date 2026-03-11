@@ -8,7 +8,7 @@ SELECT nombre, precio FROM producto;
 SELECT * FROM producto;
 
 -- 4. Llista el nom dels productes, el preu en euros (precio_eur) i el preu en dòlars estatunidencs (precio_usd) amb un tipus de canvi de 1 € = 1 $.
-SELECT nombre, precio AS price_eur, precio AS price_usd FROM producto;
+SELECT nombre, precio AS precio_eur, precio AS precio_usd FROM producto;
 
 -- 5. Llista el nom dels productes, el preu en euros i el preu en dòlars estatunidencs (amb un tipus de canvi de 1 € = 1,1 $ i arrodonint el resultat a dues xifres decimals). Utilitza els següents àlies per a les columnes: nom del producte, euros, dòlars.
 SELECT nombre AS 'nom del producte', precio AS euros, ROUND(precio * 1.1, 2) AS dòlars FROM producto;
@@ -75,14 +75,16 @@ FROM producto p
 JOIN fabricante f ON p.codigo_fabricante = f.codigo;
 
 -- 24. Retorna el nom, el preu i el nom del fabricant (fabricante), del producte més barat.
-SELECT p.nombre, MIN(p.precio) as precio, f.nombre AS fabricant
+SELECT p.nombre, MIN(p.precio) AS precio, f.nombre AS fabricant
 FROM producto p
-JOIN fabricante f ON p.codigo_fabricante = f.codigo;
+JOIN fabricante f ON p.codigo_fabricante = f.codigo
+GROUP BY p.nombre, f.nombre;
 
 -- 25. Retorna el nom del producte, el preu i el nom del seu fabricant (fabricante), del producte més car.
 SELECT p.nombre, MAX(p.precio) as precio, f.nombre AS fabricante
 FROM producto p
-JOIN fabricante f ON p.codigo_fabricante = f.codigo;
+JOIN fabricante f ON p.codigo_fabricante = f.codigo
+GROUP BY p.nombre, f.nombre;
 
 -- 26. Retorna una llista amb nom i preu de tots els productes del fabricant Lenovo.
 SELECT p.nombre, p.precio
@@ -128,7 +130,7 @@ WHERE p.precio >= 180
 ORDER BY p.precio DESC, p.nombre ASC;
 
 -- 33. Retorna un llistat amb el codi i el nom de fabricant (fabricante), solament d'aquells fabricants que tenen productes associats en la base de dades.
-SELECT f.codigo, f.nombre as fabricante
+SELECT f.codigo, f.nombre
 FROM fabricante f
 INNER JOIN producto p ON p.codigo_fabricante = f.codigo;
 
